@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zannatul Mawya Bushra — Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light Theme */
+            --bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            --primary: #0f172a;
+            --secondary: #64748b;
+            --accent: #059669; /* Green for Tech/Robotics */
+            --accent-glow: rgba(5, 150, 105, 0.4);
+            --font-main: 'Outfit', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+        [data-theme='dark'] {
+            /* Dark Theme */
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --glass-bg: rgba(30, 41, 59, 0.70);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --primary: #f1f5f9;
+            --secondary: #94a3b8;
+            --accent: #34d399; /* Brighter Green for Dark Mode */
+            --accent-glow: rgba(52, 211, 153, 0.3);
+        }
+        * { box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--primary);
+            min-height: 100vh;
+        }
+        header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; gap: 24px; padding: 16px 5%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .avatar-wrapper { position: relative; width: 85px; height: 85px; flex-shrink: 0; }
+        .avatar {
+            width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--accent), #10b981);
+            color: #fff; font-size: 2rem; font-weight: 700;
+        }
+        .avatar:hover { transform: scale(1.1) rotate(2deg); }
+        .status-badge {
+            position: absolute; bottom: 0; right: 0; width: 20px; height: 20px;
+            background: #10b981; border: 3px solid #fff; border-radius: 50%;
+        }
+        .header-info { flex: 1; }
+        .name { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+        .student-id { font-size: 0.8rem; font-weight: 400; color: var(--secondary); }
+        .role { font-family: var(--font-code); font-size: 0.9rem; color: var(--accent); margin-top: 4px; }
+        main {
+            max-width: 1100px; margin: 40px auto; padding: 0 24px;
+            display: grid; grid-template-columns: 300px 1fr; gap: 32px;
+        }
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 24px;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 24px;
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .glass-card.appear { opacity: 1; transform: translateY(0); }
+        h3 { margin: 0 0 16px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+        h3::before { content:''; display:block; width:6px; height:24px; background:var(--accent); border-radius:10px; }
+        p { line-height: 1.7; color: var(--secondary); margin-bottom: 12px; font-size: 0.95rem; }
+        .skill-row { margin-bottom: 14px; }
+        .skill-info { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 5px; font-weight: 500; }
+        .bar-bg { height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--accent); width: 0; border-radius: 4px; transition: width 1s ease-out; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .project {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 20px;
+            transition: 0.3s; display: flex; flex-direction: column;
+        }
+        .project:hover { 
+            transform: translateY(-5px); border-color: var(--accent); 
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+        }
+        .project h4 { margin: 0 0 8px 0; }
+        .tags { margin-top: auto; padding-top: 12px; display:flex; flex-wrap:wrap; gap: 6px; }
+        .tags span { 
+            font-size: 0.7rem; padding: 4px 10px; background: var(--accent-glow); 
+            color: var(--accent); border-radius: 20px; font-weight: 600;
+        }
+        .view-btn {
+            display: inline-block; margin-top: 12px; font-size: 0.8rem; 
+            text-decoration: none; color: var(--primary); border-bottom: 1px solid var(--accent);
+        }
+        .view-btn:hover { color: var(--accent); }
+        .btn {
+            padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer;
+            background: var(--accent); color: #fff; font-weight: 600; transition: 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--accent-glow); }
+        .btn.outline { background: transparent; border: 1px solid var(--secondary); color: var(--primary); }
+        .btn.outline:hover { border-color: var(--accent); color: var(--accent); }
+        input, textarea, select {
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.4); color: var(--primary); margin-bottom: 12px; font-family: inherit;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.8); }
+        footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 0.9rem; }
+        @media(max-width: 850px) {
+            main { grid-template-columns: 1fr; }
+            header { flex-direction: column; text-align: center; }
+            .header-info { align-items: center; display: flex; flex-direction: column; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <header>
+        <div class="avatar-wrapper">
+            <div class="avatar">ZB</div>
+            <div class="status-badge" title="Online"></div>
+        </div>
+        <div class="header-info">
+            <div class="name">Zannatul Mawya <span class="student-id">(20 June 2004)</span></div>
+            <div class="role" id="typing-text"></div>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn outline" onclick="toggleTheme()">Theme 🌓</button>
+            <button class="btn" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">My Work</button>
+        </div>
+    </header>
+    <main>
+        <aside>
+            <div class="glass-card appear-on-scroll">
+                <h3>Contact & Details</h3>
+                <p><strong>📍 Location:</strong> Dhaka, Bangladesh</p>
+                <p><strong>📚 Department:</strong> Computer Science & Engineering (Running)</p>
+                <p><strong>🎯 Career Goal:</strong> Skilled Robotic Engineer</p>
+                <hr style="border:0; border-top:1px solid var(--glass-border); margin: 16px 0;">
+                <p><strong>Email:</strong> jannatulmawyashimu@gmail.com</p>
+                <p><strong>Phone:</strong> 01613-543787</p>
+            </div>
+            <div class="glass-card appear-on-scroll">
+                <h3>Academic Achievements</h3>
+                <p><strong>HSC:</strong> GPA 5.00 (Dhaka Board)</p>
+                <p><strong>SSC:</strong> GPA 5.00 (Dhaka Board)</p>
+            </div>
+            <div class="glass-card appear-on-scroll">
+                <h3>Skills</h3>
+                <div id="skills-container"></div>
+            </div>
+        </aside>
+        <section>
+            <div class="glass-card appear-on-scroll">
+                <h3>Overview</h3>
+                <p>Hi, I'm **Zannatul Mawya Bushra**. I'm a motivated Computer Science & Engineering student with a core interest in **Robotics and Automation**. I am dedicated to combining my knowledge of **programming**, **electronics**, and **AI** to build innovative robotic systems.</p>
+                <p>My academic foundation includes strong **problem-solving** abilities and a grasp of **Data Structures & Algorithms**. This portfolio showcases my journey toward becoming a skilled Robotic Engineer.</p>
+            </div>
+            <div id="projects" class="glass-card appear-on-scroll">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h3>Academic Work & Projects</h3>
+                    <select id="filter" style="width:auto; margin:0; padding:6px 12px;" onchange="renderProjects()">
+                        <option value="all">All</option>
+                        <option value="coding">Coding/DSA</option>
+                        <option value="robotics">Robotics Focus</option>
+                        <option value="academic">Academic Work</option>
+                    </select>
+                </div>
+                <div class="project-grid" id="project-grid"></div>
+            </div>
+            <div class="glass-card appear-on-scroll">
+                <h3>Send Message</h3>
+                <form onsubmit="alert('Thank you! This is a demo.'); return false;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <input placeholder="Name" required>
+                        <input placeholder="Email" type="email" required>
+                    </div>
+                    <textarea rows="4" placeholder="Your message..." required></textarea>
+                    <button class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>&copy; 2025 Zannatul Mawya Bushra</footer>
+    <script>
+        const skills = [
+            { name: "Python", pct: 70 },
+            { name: "C Programming", pct: 65 },
+            { name: "C++ Basics", pct: 50 },
+            { name: "Discrete Mathematics", pct: 80 },
+            { name: "Data Structures & Algorithms", pct: 68 }
+        ];
+        // Updated projects list to include more recent/focused work
+        const projects = [
+            { 
+                title: "Introduction to Robotics Seminar", 
+                desc: "A class presentation covering the history, types (manipulators, mobile), and key components of modern robotics.", 
+                tags: ["academic", "robotics", "presentation"], 
+                link: "https://sites.google.com/student.presidency.edu.bd/zannatul-robotics-intro" 
+            },
+            { 
+                title: "Basic Python Scripting for Automation", 
+                desc: "Developed a series of small Python scripts to automate file management and data processing tasks, using fundamental programming concepts.", 
+                tags: ["coding", "python", "automation"], 
+                link: "#" 
+            },
+            { 
+                title: "DSA Array & List Practice Set", 
+                desc: "Completed and documented solutions for 20+ problems focused on fundamental DSA topics: Arrays, Linked Lists, and complexity analysis (Big O).", 
+                tags: ["coding", "dsa", "problem-solving"], 
+                link: "#" 
+            },
+            { 
+                title: "Discrete Math Coursework Analysis", 
+                desc: "In-depth review and application of Set Theory and Graph Theory concepts, crucial for system state modeling.", 
+                tags: ["academic", "math", "theory"], 
+                link: "#" 
+            }
+        ];
+        const text = "CSE Student • Aspiring Robotic Engineer 🤖 • Problem Solver";
+        let idx = 0;
+        function typeText() {
+            if(idx < text.length) { document.getElementById('typing-text').innerHTML += text.charAt(idx); idx++; setTimeout(typeText, 50); }
+        }
+        const sc = document.getElementById('skills-container');
+        skills.forEach(s => {
+            sc.innerHTML += `<div class="skill-row"><div class="skill-info"><span>${s.name}</span><span>${s.pct}%</span></div><div class="bar-bg"><div class="bar-fill" style="width:0" data-w="${s.pct}%"></div></div></div>`;
+        });
+        function renderProjects() {
+            const f = document.getElementById('filter').value, g = document.getElementById('project-grid');
+            g.innerHTML = "";
+            projects.filter(p => f === 'all' || p.tags.includes(f)).forEach(p => {
+                const lnk = p.link && p.link !== '#' ? `<a href="${p.link}" target="_blank" class="view-btn">View Document →</a>` : `<span style="margin-top:12px; font-size:0.8rem; opacity:0.5;">No Public Link</span>`;
+                g.innerHTML += `<div class="project"><h4>${p.title}</h4><p style="font-size:0.85rem">${p.desc}</p><div class="tags">${p.tags.map(t => `<span>#${t}</span>`).join('')}</div>${lnk}</div>`;
+            });
+        }
+        const obs = new IntersectionObserver(e => {
+            e.forEach(en => { if(en.isIntersecting) { en.target.classList.add('appear'); if(en.target.innerHTML.includes('Skills')) document.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.getAttribute('data-w')); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.appear-on-scroll').forEach(el => obs.observe(el));
+        function toggleTheme() { const b = document.body; b.setAttribute('data-theme', b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
+        window.onload = () => { typeText(); renderProjects(); };
+    </script>
+</body>
+</html>
